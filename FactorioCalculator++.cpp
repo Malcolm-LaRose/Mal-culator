@@ -19,7 +19,6 @@ struct Item {
     // Constructor for Item
     Item(const std::string& itemName, double itemAmount, const Recipe* itemRecipe = nullptr)
         : name(itemName), amount(itemAmount), recipe(itemRecipe) {
-        std::cout << "ANAL" << std::endl;
     }
 };
 
@@ -40,6 +39,8 @@ public:
     Recipe(const std::string& output, double time, int outputCount)
         : craftedItem(output), craftingTime(time), numItemsCrafted(outputCount) {}
 
+    // A basic Recipe like iron plate should take an Extraction (e.g. iron ore)
+
 
     // Default constructor
     Recipe() : craftingTime(0.0), numItemsCrafted(0) {}
@@ -47,7 +48,19 @@ public:
 };
 
 class Extraction {
+public:
+    // Like a Recipe, but suitable for extractionary machines instead of assemblers
 
+    std::string extractedItem;
+    double extractionTime;
+    int numItemsExtracted;
+
+    Extraction(const std::string& outputName, double time, int outputCount)
+        : extractedItem(outputName), extractionTime(time), numItemsExtracted(outputCount) {}
+
+
+    // Default constructor
+    Extraction() : extractionTime(0.0), numItemsExtracted(0) {}
 
 };
 
@@ -64,10 +77,10 @@ public:
         return recipes;
     }
 
-    // Gets a recipe from recipes by name DOESNT WORK
+    // Gets a recipe from recipes by name DOESNT WORK maybe
     Recipe* getRecipe(std::string outpItem) {
-        return  (& (recipes.find(outpItem))->second);
-        
+        return  (&(recipes.find(outpItem))->second);
+
     }
 
     // Gets an item from the production chain by name
@@ -75,10 +88,11 @@ public:
         return items[itemName];
     }
 
-    void calculateRequirements(const std::string& outputItem, double prodRate, double craftingSpeed) {
+    void calculateRequirements(const std::string& outputItem, double prodRate, double craftingSpeed, int recursionDepth = 0) {
         auto outItem = recipes.find(outputItem); // Gets the recipe for the desired output item for the calculator by name
         const Recipe* outItemRecipe = &outItem->second; // Retrieves (points to) the recipe from the name,recipe pair
- 
+        
+
         // First, say basic requirements
         // If there are ingredients in the recipe (its not a raw item)
         if (!outItemRecipe->ingredients.empty()) {
@@ -87,39 +101,43 @@ public:
                 << craftingSpeed << " items per second, you need:" << std::endl;
 
             for (const auto& inputItem : outItemRecipe->ingredients) { // Loop over all ingredients in the recipe
-                double requiredAmount = inputItem.first * (prodRate / craftingSpeed) / outItemRecipe->numItemsCrafted;
+                double requiredAmount = inputItem.first * (prodRate) / outItemRecipe->numItemsCrafted;
 
-                std::cout << requiredAmount << " " << inputItem.second->craftedItem << " per second" << std::endl;
+                std::cout << requiredAmount / craftingSpeed << " " << inputItem.second->craftedItem << " per second" << std::endl;
                 std::cout << std::endl;
             }
+
         }
 
-        // Now loop over subrecipes
+        // Then recursively go through sub ingredients
+        // std::cout << "Entering recursive function" << std::endl;
         if (!outItemRecipe->ingredients.empty()) {
 
             for (const auto& inputItem : outItemRecipe->ingredients) { // Loop over all ingredients in the recipe
+                double requiredAmount = inputItem.first * (prodRate) / outItemRecipe->numItemsCrafted;
+
+                // This is using recursion, which works but feels clunky
+                // Need to format output
                 if (!inputItem.second->ingredients.empty()) {
+                    // std::cout << "Going back to calculate requirements for subingredients" << std::endl;
+                    calculateRequirements(inputItem.second->craftedItem, requiredAmount, craftingSpeed, recursionDepth + 1);
+                    std::cout << std::endl;
+                }
 
-                    double newReqAmount{ 0.0 };
-                    
-                    newReqAmount = inputItem.first * (prodRate / craftingSpeed) / outItemRecipe->numItemsCrafted;
+                else {
+                    // Calculate Total
+                    totalRawIngredients[inputItem.second->craftedItem] += requiredAmount / craftingSpeed;
+                }
 
-
-                    for (const auto& subinputItem : inputItem.second->ingredients) { // Loop over all subingredients in the ingredient
-
-                        std::cout << "To produce " << newReqAmount << " " << inputItem.second->craftedItem << " per second crafting at "
-                            << craftingSpeed << " items per second, you need:" << std::endl;
-
-                        double requiredAmount = subinputItem.first * (prodRate / craftingSpeed) / subinputItem.second->numItemsCrafted;
-
-                        std::cout << requiredAmount << " " << subinputItem.second->craftedItem << " per second" << std::endl;
-                        std::cout << std::endl;
-                    }
+            }
+            // std::cout << "Exiting recursive function" << std::endl;
+            if (recursionDepth == 0) {
+                std::cout << "In total you need: " << std::endl;
+                for (const auto& rawIngredients : totalRawIngredients) {
+                    std::cout << rawIngredients.second << " " << rawIngredients.first << " per second" << std::endl;
                 }
             }
-        
         }
-
 
     }
 
@@ -201,12 +219,16 @@ int main() {
     ProductionChain productionChain;
 
     // Eventually define base items here, like ores and liquids
-    // Recipe ironOreRecipe("Iron Ore", 0.0, {}, 1);
+    Recipe ironOreRecipe("Iron Ore", 0.0, {}, 1);
+    Recipe copperOreRecipe("Copper Ore", 0.0, {}, 1);
+    Recipe crudeOil("Crude Oil", 0.0, {}, 1);
+    Recipe stone("Stone", 0.0, {}, 1);
+
 
     // Define basic recipes
     // Recipe codename("Real Name", time to craft in s, {refs to deeper recipes}, number of output for given input)
-    Recipe ironPlateRecipe("Iron Plate", 0.0, {}, 1);
-    Recipe copperPlateRecipe("Copper Plate", 0.0, {}, 1);
+    Recipe ironPlateRecipe("Iron Plate", 3.2, {/* {1.0, &ironOreRecipe} */}, 1);
+    Recipe copperPlateRecipe("Copper Plate", 3.2, {/* {1.0, &copperOreRecipe} */}, 1);
 
     // Define recursive recipes --> Roughly grouped by depth
     // Recipe codename("Real Name", time to craft in s, {numInput, refs to deeper recipes}, number of output for given input)
@@ -220,7 +242,11 @@ int main() {
     Recipe engineUnitRecipe("Engine Unit", 11.5, { {1.0, &steelPlateRecipe}, {1.0, &ironGearRecipe}, {2.0, &pipeRecipe} }, 1);
     Recipe electronicCircuitRecipe("Electronic Circuit", 0.5, { {1.0, &ironPlateRecipe}, {3.0, &copperWireRecipe} }, 1);
 
+    Recipe flamethrowerTurret("Flamethrower", 20, { {5.0, &engineUnitRecipe}, {15.0, &ironGearRecipe}, {10.0, &pipeRecipe}, {30.0, &steelPlateRecipe} }, 1);
+
     // Add recipes to the production chain
+    productionChain.addRecipe(ironOreRecipe);
+    productionChain.addRecipe(copperOreRecipe);
     productionChain.addRecipe(ironPlateRecipe);
     productionChain.addRecipe(copperPlateRecipe);
     productionChain.addRecipe(steelPlateRecipe);
@@ -230,6 +256,7 @@ int main() {
     productionChain.addRecipe(electronicCircuitRecipe);
     productionChain.addRecipe(pipeRecipe);
     productionChain.addRecipe(engineUnitRecipe);
+    productionChain.addRecipe(flamethrowerTurret);
 
     // Retrieve items from the production chain
     // Item& ironPlate = productionChain.getItem("Iron Plate");
