@@ -8,50 +8,26 @@
 
 
 
-// Read in data { {}, {}, ... , {}, {} }
-// Store each {} as its own raw string
-// parse through the raw string to get desired data, account for variable parsing needs and whatnot
-//		normal v expensive
-//		desired data 
+/*
 
+TODO:
+    Move to utilities file to be used by factoriocalc
+    Finish cleaning up recipe list
+    Figure out how to extract data
+    Figure out how to put data into Recipes
+    ???
+    Profit
+
+*/
+
+
+#include "malutilities.h"
 
 #include <iostream>
-#include <fstream>
-#include <sstream>
 #include <string>
 #include <vector>
 #include <regex>
 #include <cctype>  // Include the header for std::isspace
-
-
-
-std::string readFileIntoRawString(const std::string& fileName) {
-    std::ifstream file(fileName);
-    if (!file.is_open()) {
-        std::cerr << "Error opening file: " << fileName << std::endl;
-        return "";
-    }
-
-    std::ostringstream rawStringStream;
-    rawStringStream << file.rdbuf();  // Read the entire file into the stream
-
-    file.close();
-
-    return rawStringStream.str();
-}
-
-void writeToTxtFile(const std::string& rawString, const std::string& fileName) {
-    std::ofstream outputFile(fileName);
-
-    if (outputFile.is_open()) {
-        outputFile << rawString;
-        outputFile.close();
-        std::cout << "File '" << fileName << "' has been created successfully." << std::endl;
-    }
-    else {
-        std::cerr << "Error creating file '" << fileName << "'." << std::endl;
-    }
-}
 
 
 
@@ -222,11 +198,6 @@ void removeCraftingMachineTint(std::string& text) {
     // Use regex_replace to replace matches with an empty string
     text = std::regex_replace(text, pattern, "");
 }
-
-
-
-
-
 
 
 
