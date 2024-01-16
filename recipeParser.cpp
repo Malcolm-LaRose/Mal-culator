@@ -1,14 +1,7 @@
 /*
-/c lines = {} for k, v in pairs(game.recipe_prototypes) do   table.insert(lines, serpent.line({v.name,  v.ingredients, v.products})) end game.write_file("factorio-recipes.txt", table.concat(lines, "\n"))
-*/
 
-
-// Gonna want to pare down the information with reg expr first
-// Then use reg expr to get the information we need and store it in variables
-
-
-
-/*
+    Written by Malcolm LaRose
+    Free to use and edit, but please attribute me if you publish anything based on this
 
 TODO:
     Move to utilities file to be used by factoriocalc
@@ -19,7 +12,6 @@ TODO:
     Profit
 
 */
-
 
 #include "malutilities.h"
 
@@ -215,13 +207,13 @@ std::string removeCraftingMachineTint(std::string& inputMember) {
             CMTContents = CMTContents.substr(firstNewline + 1, lastNewline - firstNewline - 1);
         }
 
-        // Remove "expensive" and "normal" parts and the extra set of braces
+        // Remove crafting_machine_tint category and the extra set of braces
         std::string modifiedMember = inputMember.substr(0, CMTPos - 1);
 
         return modifiedMember;
     }
 
-    // If "expensive" or "normal" is not found, return the original member
+    // If crafting_machine_tint is not found, return the original member (do nothing)
     return inputMember;
 }
 
@@ -390,9 +382,6 @@ int main() {
         // Replace member with updated one with normal recipe and extra removed stuff
         individualMembers[i] = newerMember;
 
-
-        rawStringStream << individualMembers[i];
-
         // Print each member
         std::cout << individualMembers[i];
 
@@ -401,7 +390,10 @@ int main() {
             std::cout << ',';
         }
 
+        // Newline after comma
         std::cout << std::endl;
+
+        rawStringStream << individualMembers[i] << ',' << std::endl;
     }
     std::cout << '}' << std::endl; // Closing containing bracket
 
@@ -414,9 +406,11 @@ int main() {
     }
 
     // Get the final raw string
-    std::string roughString = outStringStream.str();
+    std::string roughCutString = outStringStream.str();
 
-    writeToTxtFile(roughString, "roughCut.txt");
+    writeToTxtFile(roughCutString, "roughCut.txt");
+
+    // Below here we want to extract the data from each member
 
 
     // Display the extracted members test statement
