@@ -30,7 +30,7 @@ TODO:
 #include <cctype>  // Include the header for std::isspace
 
 
-
+// Works on one member (or category) to extract contents from within nested braces
 std::string extractNestedBraces(const std::string& input) {
     size_t depth = 0;
     size_t start = std::string::npos;
@@ -58,6 +58,7 @@ std::string extractNestedBraces(const std::string& input) {
     return "";  // No match found
 }
 
+// Parses members from the rawString from the .txt recipes file
 std::vector<std::string> extractIndividualMembers(const std::string& input) {
     std::vector<std::string> members;
     size_t pos = 0;
@@ -98,6 +99,7 @@ std::vector<std::string> extractIndividualMembers(const std::string& input) {
 }
 
 
+// Gets normal recipe
 std::string getNormal(const std::string& inputMember) {
     // Find the position of "expensive" and "normal"
     size_t expensivePos = inputMember.find("expensive");
@@ -129,6 +131,7 @@ std::string getNormal(const std::string& inputMember) {
 
 // Functions to use on rawstring or transformed string
 
+// Clean up rawString
 void removeLeadingWhitespace(std::string& text) {
     size_t pos = 0;
 
@@ -150,6 +153,7 @@ void removeLeadingWhitespace(std::string& text) {
     }
 }
 
+// Remove simple one liner categories
 void removeLineStartingWith(std::string& text, const std::string& sequence) {
     // Find the first occurrence of the sequence in the text
     size_t pos = text.find(sequence);
@@ -168,6 +172,7 @@ void removeLineStartingWith(std::string& text, const std::string& sequence) {
         pos = text.find(sequence, pos + 1);
     }
 }
+
 
 void ensureNewlineAfterBrace(std::string& text) {
     size_t pos = 0;
@@ -192,11 +197,32 @@ void ensureNewlineAfterBrace(std::string& text) {
     }
 }
 
-void removeCraftingMachineTint(std::string& text) {
-    std::regex pattern(R"(crafting_machine_tint\s*=\s*\{[^{}]*\})");
+std::string removeCraftingMachineTint(std::string& inputMember) {
+    // Find the position of "crafting_machine_tint"
+    size_t CMTPos = inputMember.find("crafting_machine_tint");
 
-    // Use regex_replace to replace matches with an empty string
-    text = std::regex_replace(text, pattern, "");
+    // If crafting_machine_tint found, remove and return the modified member
+    if (CMTPos != std::string::npos) {
+        // Extract the contents of "normal" excluding the first and last lines
+        std::string CMTContents = extractNestedBraces(inputMember.substr(CMTPos));
+
+        // Find the positions of the first and last newlines in normalContents
+        size_t firstNewline = CMTContents.find_first_of('\n');
+        size_t lastNewline = CMTContents.find_last_of('\n');
+
+        // If both newlines are found, remove the first and last lines
+        if (firstNewline != std::string::npos && lastNewline != std::string::npos && firstNewline < lastNewline) {
+            CMTContents = CMTContents.substr(firstNewline + 1, lastNewline - firstNewline - 1);
+        }
+
+        // Remove "expensive" and "normal" parts and the extra set of braces
+        std::string modifiedMember = inputMember.substr(0, CMTPos - 1);
+
+        return modifiedMember;
+    }
+
+    // If "expensive" or "normal" is not found, return the original member
+    return inputMember;
 }
 
 
@@ -327,34 +353,47 @@ int main() {
 //
 //)";
 
+    // Functions that act on the whole raw string
+    // 
+    // ONE LINE CATEGORIES ONLY!!!
+    std::vector<std::string> catsToRemove = { "type", "category", "enabled", "order", "allow_decomposition", "main_product", "subgroup", "requester_paste_multiplier"};
 
-// ONE LINE CATEGORIES ONLY!!!
-std::vector<std::string> catsToRemove = { "type", "category", "enabled", "order", "allow_decomposition", "main_product", "subgroup", "requester_paste_multiplier"};
+    removeLeadingWhitespace(rawString);
+    ensureNewlineAfterBrace(rawString);
+    removeLeadingWhitespace(rawString);
 
-removeLeadingWhitespace(rawString);
-ensureNewlineAfterBrace(rawString);
-removeLeadingWhitespace(rawString);
+    for (auto& vi : catsToRemove) {
+        removeLineStartingWith(rawString, vi);
+    }
 
-for (auto& vi : catsToRemove) {
-    removeLineStartingWith(rawString, vi);
-}
-
-removeCraftingMachineTint(rawString);
+    // Get members of each 'member' (recipe)
 
     std::vector<std::string> individualMembers = extractIndividualMembers(rawString);
-    std::cout << "SIZE: " << individualMembers.size() << std::endl;
+    // std::cout << "SIZE: " << individualMembers.size() << std::endl; // (Test statement)
 
 
+    // stringstream to store output of final processing
+    std::ostringstream rawStringStream;
+
+
+    // Processing individual members
     std::cout << '{' << std::endl; // Opening containing bracket
     for (size_t i = 0; i < individualMembers.size(); ++i) {
         // std::cout << "Original member:\n" << individualMembers[i] << '\n';  // Debug line
 
+        // Get normal recipe, trim expensive one, trim crafting_machine_tint
         auto newMember = getNormal(individualMembers[i]);
+        auto newerMember = removeCraftingMachineTint(newMember);
 
         // std::cout << "Modified member:\n" << newMember << '\n';  // Debug line
 
-        individualMembers[i] = newMember;
+        // Replace member with updated one with normal recipe and extra removed stuff
+        individualMembers[i] = newerMember;
 
+
+        rawStringStream << individualMembers[i];
+
+        // Print each member
         std::cout << individualMembers[i];
 
         // Check if it's not the last member before printing the comma
@@ -366,13 +405,16 @@ removeCraftingMachineTint(rawString);
     }
     std::cout << '}' << std::endl; // Closing containing bracket
 
-    std::ostringstream rawStringStream;
-    for (const auto& str : rawString) {
-        rawStringStream << str;
+    std::string outString = rawStringStream.str();
+
+    // Write to a .txt file
+    std::ostringstream outStringStream;
+    for (const auto& str : outString) {
+        outStringStream << str;
     }
 
     // Get the final raw string
-    std::string roughString = rawStringStream.str();
+    std::string roughString = outStringStream.str();
 
     writeToTxtFile(roughString, "roughCut.txt");
 

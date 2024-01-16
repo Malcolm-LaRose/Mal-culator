@@ -24,6 +24,12 @@ std::string readFileIntoRawString(const std::string& fileName) {
 }
 
 void writeToTxtFile(const std::string& rawString, const std::string& fileName) {
+
+    std::ofstream outFile(fileName, std::ios::trunc);
+
+    // Close the file
+    outFile.close();
+
     std::ofstream outputFile(fileName);
 
     if (outputFile.is_open()) {
