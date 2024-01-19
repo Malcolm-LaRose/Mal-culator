@@ -1,6 +1,6 @@
 /*
 
-    Written by Malcolm LaRose
+    Written by Malcolm LaRose for C++/17 in January, the year of our Lord, 2024, the 16th day.
     Free to use and edit, but please attribute me if you publish anything based on this
 
 TODO:
@@ -8,8 +8,12 @@ TODO:
     Finish cleaning up recipe list
     Figure out how to extract data
     Figure out how to put data into Recipes
-    ???
-    Profit
+
+    Bonus:
+    Convert factorio recipe.lua to TextFile1.txt
+    Clean up intermediate steps (refactor)
+        * Refactor part that looks for stuff within brackets that may contain brackets themselves
+    Optimization
 
 */
 
@@ -217,6 +221,27 @@ std::string removeCraftingMachineTint(std::string& inputMember) {
     return inputMember;
 }
 
+std::string getName() {
+
+    return "";
+}
+
+std::string getIngredients() {
+
+    return "";
+}
+
+std::string getResults() {
+
+    return "";
+}
+
+std::string getEnergy() {
+
+    return "";
+}
+
+
 
 
 
@@ -382,6 +407,11 @@ int main() {
         // Replace member with updated one with normal recipe and extra removed stuff
         individualMembers[i] = newerMember;
 
+        // Below here we want to extract the data from each member
+
+        // Get ingredients, results, result, energy_required
+        // Use if statements to account for possibility of not having a category
+
         // Print each member
         std::cout << individualMembers[i];
 
@@ -393,6 +423,10 @@ int main() {
         // Newline after comma
         std::cout << std::endl;
 
+        std::cout << "THE PREVIOUS MEMBER IS NAMED X HAS Y INGREDIENTS AND PRODUCES Z WITH E ENERGY REQUIRED" << std::endl; // Main test statement
+
+
+        // This is the ACTUAL output for now, everything else is essentially runtime debugging
         rawStringStream << individualMembers[i] << ',' << std::endl;
     }
     std::cout << '}' << std::endl; // Closing containing bracket
@@ -410,7 +444,6 @@ int main() {
 
     writeToTxtFile(roughCutString, "roughCut.txt");
 
-    // Below here we want to extract the data from each member
 
 
     // Display the extracted members test statement
