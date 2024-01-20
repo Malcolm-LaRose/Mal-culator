@@ -6,6 +6,7 @@
 TODO:
     Move to utilities file to be used by factoriocalc
     Finish cleaning up recipe list
+        // Clean up braces and newlines
     Figure out how to extract data
     Figure out how to put data into Recipes
 
@@ -223,20 +224,38 @@ std::string removeCraftingMachineTint(std::string& inputMember) {
 
 std::string getName() {
 
+    // Take a member
+    // Find name string (regex?)
+    // Extract important info
+    // Return important info
+
     return "";
 }
 
 std::string getIngredients() {
+
+    // Take a member
+    // Find ingredients string (regex?)
+        // Treat ingredients category as a member (submember)
+        // Check for 'name' 'type' etc. (might have to handle a few cases 'manualy')
+        // Extract important info 
+    // Return important info
 
     return "";
 }
 
 std::string getResults() {
 
+    // Check for results and result count
+    // if no result count, result count = 1
+
     return "";
 }
 
 std::string getEnergy() {
+
+    // Check for energy required
+    // If no energy required, energy required = 1
 
     return "";
 }
@@ -370,6 +389,59 @@ int main() {
 //
 //)";
 
+std::string newTestCaseString = R"( 
+
+{
+name = "speed-module",
+ingredients =
+{
+{"advanced-circuit", 5},
+{"electronic-circuit", 5}
+},
+energy_required = 15,
+result = "speed-module"
+},
+{
+name = "advanced-oil-processing",
+energy_required = 5,
+ingredients =
+{
+{type="fluid", name="water", amount=50},
+{type="fluid", name="crude-oil", amount=100}
+},
+results=
+{
+{type="fluid", name="heavy-oil", amount=25},
+{type="fluid", name="light-oil", amount=45},
+{type="fluid", name="petroleum-gas", amount=55}
+},
+icon = "__base__/graphics/icons/fluid/advanced-oil-processing.png",
+icon_size = 64, icon_mipmaps = 4,
+},
+{
+name = "refined-hazard-concrete",
+energy_required = 0.25,
+ingredients =
+{
+{"refined-concrete", 10}
+},
+result= "refined-hazard-concrete",
+result_count = 10
+},
+{
+name = "electric-engine-unit",
+energy_required = 10,
+ingredients =
+{
+{"engine-unit", 1},
+{type="fluid", name= "lubricant", amount = 15},
+{"electronic-circuit", 2}
+},
+result = "electric-engine-unit",
+},
+
+)";
+
     // Functions that act on the whole raw string
     // 
     // ONE LINE CATEGORIES ONLY!!!
@@ -382,11 +454,12 @@ int main() {
     for (auto& vi : catsToRemove) {
         removeLineStartingWith(rawString, vi);
     }
+    removeLineStartingWith(rawString, "icon");
 
     // Get members of each 'member' (recipe)
 
     std::vector<std::string> individualMembers = extractIndividualMembers(rawString);
-    // std::cout << "SIZE: " << individualMembers.size() << std::endl; // (Test statement)
+    std::cout << "SIZE: " << individualMembers.size() << std::endl; // (Test statement)
 
 
     // stringstream to store output of final processing
@@ -401,6 +474,7 @@ int main() {
         // Get normal recipe, trim expensive one, trim crafting_machine_tint
         auto newMember = getNormal(individualMembers[i]);
         auto newerMember = removeCraftingMachineTint(newMember);
+        auto newestMember = "";
 
         // std::cout << "Modified member:\n" << newMember << '\n';  // Debug line
 
@@ -423,7 +497,7 @@ int main() {
         // Newline after comma
         std::cout << std::endl;
 
-        std::cout << "THE PREVIOUS MEMBER IS NAMED X HAS Y INGREDIENTS AND PRODUCES Z WITH E ENERGY REQUIRED" << std::endl; // Main test statement
+        // std::cout << "THE PREVIOUS MEMBER IS NAMED X HAS Y INGREDIENTS AND PRODUCES Z WITH E ENERGY REQUIRED" << std::endl; // Main test statement
 
 
         // This is the ACTUAL output for now, everything else is essentially runtime debugging
