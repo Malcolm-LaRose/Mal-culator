@@ -6,6 +6,8 @@
 TODO:
 
     Finish getIngredients function
+        One line per ingredient and amount
+        Same with the weird ones
 
     Move to utilities file to be used by factoriocalc
     Finish cleaning up recipe list
@@ -173,11 +175,26 @@ void removeLineStartingWith(std::string& text, const std::string& sequence) {
     }
 }
 
+// Function to remove every instance of the character '"' from a string
+std::string removeQuotes(const std::string& input) {
+    std::string result;
+
+    for (char ch : input) {
+        // Filter out the '"' character
+        if (ch != '"') {
+            result += ch;
+        }
+    }
+
+    return result;
+}
+
 
 void ensureNewlineAfterBrace(std::string& text) {
     size_t pos = 0;
 
     while (pos < text.length()) {
+
         // Find the next '},' in the current line
         size_t bracePos = text.find("},", pos);
 
@@ -196,6 +213,27 @@ void ensureNewlineAfterBrace(std::string& text) {
         ++pos;  // Move past the newline character
     }
 }
+
+void insertNewlineBetweenBrackets(std::string& input) {
+    // Iterate through the string
+    for (size_t i = 0; i < input.size() - 1; ++i) {
+        // Check for consecutive opening brackets
+        if (input[i] == '{' && input[i + 1] == '{') {
+            // Insert a newline after the first bracket
+            input.insert(i + 1, "\n");
+            // Increment the loop index to skip the newly inserted newline
+            ++i;
+        }
+        // Check for consecutive closing brackets
+        else if (input[i] == '}' && input[i + 1] == '}') {
+            // Insert a newline after the first bracket
+            input.insert(i + 1, "\n");
+            // Increment the loop index to skip the newly inserted newline
+            ++i;
+        }
+    }
+}
+
 
 void removeNewlineAfterEquals(std::string& text) {
     size_t pos = 0;
@@ -285,7 +323,54 @@ bool checkForLastCommaBool(std::vector<std::string> inputMember, int i) {
 //}
 
 
+// Function to parse ingredients data and output in the format {name, amount}
+std::string parseIngredients(const std::string& ingredientsData) {
+    std::vector<std::string> result;
+    size_t pos = 0;
 
+    // Find and parse each occurrence of "name=" and "amount="
+    while ((pos = ingredientsData.find("name=", pos)) != std::string::npos) {
+        // Find the end of the current "name="
+        size_t endPos = ingredientsData.find(',', pos);
+        if (endPos == std::string::npos) {
+            break; // If ',' not found, exit loop
+        }
+
+        // Extract the name substring
+        std::string name = ingredientsData.substr(pos + 6, endPos - pos - 7);
+
+        // Find the corresponding "amount=" after the name
+        size_t amountPos = ingredientsData.find("amount=", endPos);
+        if (amountPos == std::string::npos) {
+            break; // If "amount=" not found, exit loop
+        }
+
+        // Find the end of the current "amount="
+        size_t amountEndPos = ingredientsData.find('}', amountPos);
+        if (amountEndPos == std::string::npos) {
+            break; // If '}' not found, exit loop
+        }
+
+        // Extract the amount substring and convert it to an integer
+        int amount = std::stoi(ingredientsData.substr(amountPos + 7, amountEndPos - amountPos - 7));
+
+        // Format the output string as {name, amount} and add it to the result vector
+        result.push_back("{" + name + ", " + std::to_string(amount) + "}");
+
+        // Move the position forward
+        pos = amountEndPos;
+    }
+
+    // Convert the vector to a single string
+    std::string output;
+    for (const auto& ingredient : result) {
+        output += ingredient + '\n';
+    }
+
+    std::string finalOut = "{ \n" + output + "}";
+
+    return finalOut;
+}
 
 std::string getIngredients(std::string& inputMember) {
     // Position of ingredients string
@@ -296,23 +381,29 @@ std::string getIngredients(std::string& inputMember) {
         // Extract the contents of "ingredients" including the braces
         std::string ingContents = extractNestedBraces(inputMember.substr(ingPos));
 
+        //std::cout << "ING CONTS: " << ingContents << std::endl;
+
+
         // If the contents are weird (have ids like "name" or "type") handle that here 
+        size_t typePos = ingContents.find("type=");
 
-        size_t typePos = ingContents.find("type");
+        std::string outputPair("");
 
-        if (typePos != std::string::npos) {
-            std::cout << "WEIRD ONE HERE" << std::endl;
-
-            // Get name info
-            size_t namePos = ingContents.find("name");
-            std::string nameContents = inputMember.substr(/* SOMETHING GOES HERE*/);
-            // Get amount info
-
-            // Output in format {"name", amount}
-
+        if (typePos == std::string::npos) { // Ingredients aren't weird, handle normally
+            outputPair = ingContents;
         }
 
-        std::string outputPair(ingContents);
+        else if (typePos != std::string::npos) {
+            outputPair = parseIngredients(ingContents);
+        }
+
+        else {
+            outputPair = ingContents;
+        }
+
+        ensureNewlineAfterBrace(outputPair);
+        insertNewlineBetweenBrackets(outputPair);
+
         return outputPair;
     }
     else { 
@@ -323,16 +414,33 @@ std::string getIngredients(std::string& inputMember) {
 }
 
 
-std::string getName(std::string& inputMember) {
+
+
+std::string getRecipeName(std::string& inputMember) {
 
     // Take a member
     // Find name string
     // Find the position of "name"
-    size_t CMTPos = inputMember.find("name");
     // Extract important info
     // Return important info
 
-    return "";
+    std::string result;
+    size_t pos = inputMember.find("name = ");
+
+    // Find the end of the current "name = "
+    size_t endPos = inputMember.find(',', pos); // First comma after name = 
+    if (endPos == std::string::npos) {
+        result = "PaNiC";
+    }
+
+    // Extract the name substring
+    std::string name = inputMember.substr(pos + 8, endPos - pos - 9);
+
+
+    // Format the output string as {name, amount} and add it to the result vector
+    result = name;
+
+    return name;
 }
 
 std::string getResults(std::string& inputMember) {
@@ -354,6 +462,7 @@ std::string getEnergy(std::string& inputMember) {
 
 
 
+
 int main() {
     std::string filename = "TextFile1.txt";
     std::string rawString = readFileIntoRawString(filename);
@@ -371,123 +480,6 @@ int main() {
 //    std::cout << "Raw string content:\n" << rawString << std::endl;
 
 
-//std::string testtextTwo = R"(
-//
-//  {
-//    type = "recipe",
-//    name = "steam-engine",
-//    normal =
-//    {
-//      ingredients =
-//      {
-//        {"iron-gear-wheel", 8},
-//        {"pipe", 5},
-//        {"iron-plate", 10}
-//      },
-//      result = "steam-engine"
-//    },
-//    expensive =
-//    {
-//      ingredients =
-//      {
-//        {"iron-gear-wheel", 10},
-//        {"pipe", 5},
-//        {"iron-plate", 50}
-//      },
-//      result = "steam-engine"
-//    }
-//  },
-//  {
-//    type = "recipe",
-//    name = "iron-gear-wheel",
-//    normal =
-//    {
-//      ingredients = {{"iron-plate", 2}},
-//      result = "iron-gear-wheel"
-//    },
-//    expensive =
-//    {
-//      ingredients = {{"iron-plate", 4}},
-//      result = "iron-gear-wheel"
-//    }
-//  },
-//  {
-//    type = "recipe",
-//    name = "electronic-circuit",
-//    normal =
-//    {
-//      ingredients =
-//      {
-//        {"iron-plate", 1},
-//        {"copper-cable", 3}
-//      },
-//      result = "electronic-circuit"
-//    },
-//    expensive =
-//    {
-//      ingredients =
-//      {
-//        {"iron-plate", 2},
-//        {"copper-cable", 8}
-//      },
-//      result = "electronic-circuit"
-//    }
-//  }
-//
-//)";
-
-//std::string newTestCaseString = R"( 
-//
-//{
-//name = "speed-module",
-//ingredients =
-//{
-//{"advanced-circuit", 5},
-//{"electronic-circuit", 5}
-//},
-//energy_required = 15,
-//result = "speed-module"
-//},
-//{
-//name = "advanced-oil-processing",
-//energy_required = 5,
-//ingredients =
-//{
-//{type="fluid", name="water", amount=50},
-//{type="fluid", name="crude-oil", amount=100}
-//},
-//results=
-//{
-//{type="fluid", name="heavy-oil", amount=25},
-//{type="fluid", name="light-oil", amount=45},
-//{type="fluid", name="petroleum-gas", amount=55}
-//},
-//icon = "__base__/graphics/icons/fluid/advanced-oil-processing.png",
-//icon_size = 64, icon_mipmaps = 4,
-//},
-//{
-//name = "refined-hazard-concrete",
-//energy_required = 0.25,
-//ingredients =
-//{
-//{"refined-concrete", 10}
-//},
-//result= "refined-hazard-concrete",
-//result_count = 10
-//},
-//{
-//name = "electric-engine-unit",
-//energy_required = 10,
-//ingredients =
-//{
-//{"engine-unit", 1},
-//{type="fluid", name= "lubricant", amount = 15},
-//{"electronic-circuit", 2}
-//},
-//result = "electric-engine-unit",
-//},
-//
-//)";
 
     // Functions that act on the whole raw string
     // 
@@ -504,12 +496,11 @@ int main() {
     removeLineStartingWith(rawString, "icon");
 
     removeNewlineAfterEquals(rawString);
-    // formatIngredientsOnOneLine(rawString); THIS FUNCTION IS FUCKED
 
     // Get members of each 'member' (recipe)
 
-    std::vector<std::string> individualMembers = extractIndividualMembers(rawString);
-    std::cout << "SIZE: " << individualMembers.size() << std::endl; // (Test statement)
+    std::vector<std::string> individualMembers = extractIndividualMembers(rawString);  // Essentially a list of recipes
+    // std::cout << "SIZE: " << individualMembers.size() << std::endl; // (Test statement)
 
 
     // stringstream to store output of final processing
@@ -533,8 +524,10 @@ int main() {
         // Replace member with updated one with normal recipe and extra removed stuff
         individualMembers[i] = newerMember;
 
-        auto ingredientsTest = getIngredients(individualMembers[i]);
+        // auto ingredientsTest = getIngredients(individualMembers[i]);
 
+
+        // This gets put in roughCut.txt eventually
         auto outputString = individualMembers[i]; // Usually individualMembers[i]
 
 
@@ -546,10 +539,16 @@ int main() {
             rawStringStream << outputString << std::endl;
         }
 
-        //std::string ingredientsCategory = getIngredients(individualMembers[i]).first;
-        // std::string memberWithoutIngredients = getIngredients(individualMembers[i]).second;
+        // WE ARE USING THE ROUGHCUT AS THE STARTING POINT FROM HERE
+        // No more cleaning up input, only output
+        // Now we are assembling our own members from the initial data
+        // We may compare afterwards to ensure correctness
 
-       // individualMembers[i] = memberWithoutIngredients;
+        std::string ingredientsOutput = getIngredients(individualMembers[i]);
+        std::string nameOutput = getRecipeName(individualMembers[i]);
+
+        std::cout << removeQuotes(nameOutput) << std::endl << removeQuotes(ingredientsOutput) << std::endl << std::endl;
+
 
         // Below here we want to extract the data from each member
             // We should probably do this by identifying each category and placing them into a new member
@@ -561,16 +560,16 @@ int main() {
         // LINE BY LINE TEST STATEMENTS
 
         //// Print each member
-        std::cout << ingredientsTest << "," << std::endl;
+        // std::cout << ingredientsTest << "," << std::endl;
 
 
         // std::cout << "THE PREVIOUS MEMBER IS NAMED X HAS " << ingredientsCategory <<" INGREDIENTS AND PRODUCES Z WITH E ENERGY REQUIRED" << std::endl; // Main test statement
 
         // END OF LOOP TEST STATEMENTS
-        if (i == (individualMembers.size() - 1))
-        {
-            std::cout << individualMembers.size() << std::endl;
-        }
+        //if (i == (individualMembers.size() - 1))
+        //{
+        //    std::cout << individualMembers.size() << std::endl;
+        //}
 
     }
     std::cout << '}' << std::endl; // Closing containing bracket
@@ -589,13 +588,6 @@ int main() {
 
 
     writeToTxtFile(roughCutString, "roughCut.txt");
-
-
-
-    // Display the extracted members test statement
-    //for (const auto& member : individualMembers) {
-    //    std::cout << "Extracted member: " << member << '\n';
-    //}
 
     return 0;
 }

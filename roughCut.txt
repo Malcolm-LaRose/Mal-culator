@@ -1,0 +1,1806 @@
+{
+name = "speed-module",
+ingredients = {
+{"advanced-circuit", 5},
+{"electronic-circuit", 5}
+},
+energy_required = 15,
+result = "speed-module"
+}
+{
+name = "speed-module-2",
+ingredients = {
+{"speed-module", 4},
+{"advanced-circuit", 5},
+{"processing-unit", 5}
+},
+energy_required = 30,
+result = "speed-module-2"
+}
+{
+name = "speed-module-3",
+ingredients = {
+{"speed-module-2", 5},
+{"advanced-circuit", 5},
+{"processing-unit", 5}
+},
+energy_required = 60,
+result = "speed-module-3"
+}
+{
+name = "productivity-module",
+ingredients = {
+{"advanced-circuit", 5},
+{"electronic-circuit", 5}
+},
+energy_required = 15,
+result = "productivity-module"
+}
+{
+name = "productivity-module-2",
+ingredients = {
+{"productivity-module", 4},
+{"advanced-circuit", 5},
+{"processing-unit", 5}
+},
+energy_required = 30,
+result = "productivity-module-2"
+}
+{
+name = "productivity-module-3",
+ingredients = {
+{"productivity-module-2", 5},
+{"advanced-circuit", 5},
+{"processing-unit", 5}
+},
+energy_required = 60,
+result = "productivity-module-3"
+}
+{
+name = "effectivity-module",
+ingredients = {
+{"advanced-circuit", 5},
+{"electronic-circuit", 5}
+},
+energy_required = 15,
+result = "effectivity-module"
+}
+{
+name = "effectivity-module-2",
+ingredients = {
+{"effectivity-module", 4},
+{"advanced-circuit", 5},
+{"processing-unit", 5}
+},
+energy_required = 30,
+result = "effectivity-module-2"
+}
+{
+name = "effectivity-module-3",
+ingredients = {
+{"effectivity-module-2", 5},
+{"advanced-circuit", 5},
+{"processing-unit", 5}
+},
+energy_required = 60,
+result = "effectivity-module-3"
+}
+{
+name = "stack-inserter",
+ingredients = {
+{"iron-gear-wheel", 15},
+{"electronic-circuit", 15},
+{"advanced-circuit", 1},
+{"fast-inserter", 1}
+},
+result = "stack-inserter"
+}
+{
+name = "stack-filter-inserter",
+ingredients = {
+{"stack-inserter", 1},
+{"electronic-circuit", 5}
+},
+result = "stack-filter-inserter"
+}
+{
+name = "basic-oil-processing",
+energy_required = 5,
+ingredients = {
+{type="fluid", name="crude-oil", amount=100, fluidbox_index = 2}
+},
+results= {
+{type="fluid", name="petroleum-gas", amount=45, fluidbox_index = 3}
+},
+icon_size = 64, }
+{
+name = "advanced-oil-processing",
+energy_required = 5,
+ingredients = {
+{type="fluid", name="water", amount=50},
+{type="fluid", name="crude-oil", amount=100}
+},
+results= {
+{type="fluid", name="heavy-oil", amount=25},
+{type="fluid", name="light-oil", amount=45},
+{type="fluid", name="petroleum-gas", amount=55}
+},
+icon_size = 64, }
+{
+name = "coal-liquefaction",
+energy_required = 5,
+ingredients = {
+{type="item", name="coal", amount=10},
+{type="fluid", name="heavy-oil", amount=25},
+{type="fluid", name="steam", amount=50}
+},
+results= {
+{type="fluid", name="heavy-oil", amount=90},
+{type="fluid", name="light-oil", amount=20},
+{type="fluid", name="petroleum-gas", amount=10}
+},
+icon_size = 64, }
+{
+name = "heavy-oil-cracking",
+energy_required = 2,
+ingredients = {
+{type="fluid", name="water", amount=30},
+{type="fluid", name="heavy-oil", amount=40}
+},
+results= {
+{type="fluid", name="light-oil", amount=30}
+},
+icon_size = 64,
+{
+name = "light-oil-cracking",
+energy_required = 2,
+ingredients = {
+{type="fluid", name="water", amount=30},
+{type="fluid", name="light-oil", amount=30}
+},
+results= {
+{type="fluid", name="petroleum-gas", amount=20}
+},
+icon_size = 64,
+{
+name = "sulfuric-acid",
+energy_required = 1,
+ingredients = {
+{type="item", name="sulfur", amount=5},
+{type="item", name="iron-plate", amount=1},
+{type="fluid", name="water", amount=100}
+},
+results= {
+{type="fluid", name="sulfuric-acid", amount=50}
+},
+{
+name = "plastic-bar",
+energy_required = 1,
+ingredients = {
+{type="fluid", name="petroleum-gas", amount=20},
+{type="item", name="coal", amount=1}
+},
+results= {
+{type="item", name="plastic-bar", amount=2}
+},
+{
+name = "solid-fuel-from-light-oil",
+energy_required = 2,
+ingredients = {
+{type="fluid", name="light-oil", amount=10}
+},
+results= {
+{type="item", name="solid-fuel", amount=1}
+},
+icon_size = 64,
+{
+name = "solid-fuel-from-petroleum-gas",
+energy_required = 2,
+ingredients = {
+{type="fluid", name="petroleum-gas", amount=20}
+},
+results= {
+{type="item", name="solid-fuel", amount=1}
+},
+icon_size = 64,
+{
+name = "solid-fuel-from-heavy-oil",
+energy_required = 2,
+ingredients = {
+{type="fluid", name="heavy-oil", amount=20}
+},
+results= {
+{type="item", name="solid-fuel", amount=1}
+},
+icon_size = 64,
+{
+name = "sulfur",
+energy_required = 1,
+ingredients = {
+{type="fluid", name="water", amount=30},
+{type="fluid", name="petroleum-gas", amount=30}
+},
+results= {
+{type="item", name="sulfur", amount=2}
+},
+{
+name = "lubricant",
+energy_required = 1,
+ingredients = {
+{type="fluid", name="heavy-oil", amount=10}
+},
+results= {
+{type="fluid", name="lubricant", amount=10}
+},
+{
+name = "empty-barrel",
+energy_required = 1,
+ingredients = {
+{type="item", name="steel-plate", amount=1}
+},
+results= {
+{type="item", name="empty-barrel", amount=1}
+}
+}
+{
+name = "night-vision-equipment",
+energy_required = 10,
+ingredients = {
+{"advanced-circuit", 5},
+{"steel-plate", 10}
+},
+result = "night-vision-equipment"
+}
+{
+name = "belt-immunity-equipment",
+energy_required = 10,
+ingredients = {
+{"advanced-circuit", 5},
+{"steel-plate", 10}
+},
+result = "belt-immunity-equipment"
+}
+{
+name = "energy-shield-equipment",
+energy_required = 10,
+ingredients = {
+{"advanced-circuit", 5},
+{"steel-plate", 10}
+},
+result = "energy-shield-equipment"
+}
+{
+name = "energy-shield-mk2-equipment",
+energy_required = 10,
+ingredients = {
+{"energy-shield-equipment", 10},
+{"processing-unit", 5},
+{"low-density-structure", 5}
+},
+result = "energy-shield-mk2-equipment"
+}
+{
+name = "battery-equipment",
+energy_required = 10,
+ingredients = {
+{"battery", 5},
+{"steel-plate", 10}
+},
+result = "battery-equipment"
+}
+{
+name = "battery-mk2-equipment",
+energy_required = 10,
+ingredients = {
+{"battery-equipment", 10},
+{"processing-unit", 15},
+{"low-density-structure", 5}
+},
+result = "battery-mk2-equipment"
+}
+{
+name = "solar-panel-equipment",
+energy_required = 10,
+ingredients = {
+{"solar-panel", 1},
+{"advanced-circuit", 2},
+{"steel-plate", 5}
+},
+result = "solar-panel-equipment"
+}
+{
+name = "fusion-reactor-equipment",
+energy_required = 10,
+ingredients = {
+{"processing-unit", 200},
+{"low-density-structure", 50}
+},
+result = "fusion-reactor-equipment"
+}
+{
+name = "personal-laser-defense-equipment",
+energy_required = 10,
+ingredients = {
+{"processing-unit", 20},
+{"low-density-structure", 5},
+{"laser-turret", 5}
+},
+result = "personal-laser-defense-equipment"
+}
+{
+name = "discharge-defense-equipment",
+energy_required = 10,
+ingredients = {
+{"processing-unit", 5},
+{"steel-plate", 20},
+{"laser-turret", 10}
+},
+result = "discharge-defense-equipment"
+}
+{
+name = "discharge-defense-remote",
+ingredients = {{"electronic-circuit", 1}},
+result = "discharge-defense-remote"
+}
+{
+name = "exoskeleton-equipment",
+energy_required = 10,
+ingredients = {
+{"processing-unit", 10},
+{"electric-engine-unit", 30},
+{"steel-plate", 20}
+},
+result = "exoskeleton-equipment"
+}
+{
+name = "personal-roboport-equipment",
+energy_required = 10,
+ingredients = {
+{"advanced-circuit", 10},
+{"iron-gear-wheel", 40},
+{"steel-plate", 20},
+{"battery", 45}
+},
+result = "personal-roboport-equipment"
+}
+{
+name = "personal-roboport-mk2-equipment",
+energy_required = 20,
+ingredients = {
+{"personal-roboport-equipment", 5},
+{"processing-unit", 100},
+{"low-density-structure", 20}
+},
+result = "personal-roboport-mk2-equipment"
+}
+{
+name = "laser-turret",
+energy_required = 20,
+ingredients = {
+{"steel-plate", 20},
+{"electronic-circuit", 20},
+{"battery", 12}
+},
+result = "laser-turret"
+}
+{
+name = "flamethrower-turret",
+energy_required = 20,
+ingredients = {
+{"steel-plate", 30},
+{"iron-gear-wheel", 15},
+{"pipe", 10},
+{"engine-unit", 5}
+},
+result = "flamethrower-turret"
+}
+{
+name = "artillery-turret",
+energy_required = 40,
+ingredients = {
+{"steel-plate", 60},
+{"concrete", 60},
+{"iron-gear-wheel", 40},
+{"advanced-circuit", 20}
+},
+result = "artillery-turret"
+}
+{
+name = "artillery-targeting-remote",
+ingredients = {
+{"processing-unit", 1},
+{"radar", 1}
+},
+result = "artillery-targeting-remote"
+}
+{
+name = "gun-turret",
+energy_required = 8,
+ingredients = {
+{"iron-gear-wheel", 10},
+{"copper-plate", 10},
+{"iron-plate", 20}
+},
+result = "gun-turret"
+}
+{
+name = "wooden-chest",
+ingredients = {{"wood", 2}},
+result = "wooden-chest"
+}
+{
+name = "iron-stick",
+ingredients = {{"iron-plate", 1}},
+result = "iron-stick",
+result_count = 2
+}
+{
+name = "stone-furnace",
+ingredients = {{"stone", 5}},
+result = "stone-furnace"
+}
+{
+name = "boiler",
+ingredients = {{"stone-furnace", 1},
+{"pipe", 4}},
+result = "boiler"
+}
+{
+name = "steam-engine",ingredients = {
+{"iron-gear-wheel", 8},
+{"pipe", 5},
+{"iron-plate", 10}
+},
+result = "steam-engine"
+{
+name = "iron-gear-wheel",ingredients = {{"iron-plate", 2}},
+result = "iron-gear-wheel"
+{
+name = "electronic-circuit",ingredients = {
+{"iron-plate", 1},
+{"copper-cable", 3}
+},
+result = "electronic-circuit"
+{
+name = "transport-belt",
+ingredients = {
+{"iron-plate", 1},
+{"iron-gear-wheel", 1}
+},
+result = "transport-belt",
+result_count = 2
+}
+{
+name = "electric-mining-drill",energy_required = 2,
+ingredients = {
+{"electronic-circuit", 3},
+{"iron-gear-wheel", 5},
+{"iron-plate", 10}
+},
+result = "electric-mining-drill"
+{
+name = "burner-mining-drill",energy_required = 2,
+ingredients = {
+{"iron-gear-wheel", 3},
+{"stone-furnace", 1},
+{"iron-plate", 3}
+},
+result = "burner-mining-drill"
+{
+name = "inserter",
+ingredients = {
+{"electronic-circuit", 1},
+{"iron-gear-wheel", 1},
+{"iron-plate", 1}
+},
+result = "inserter"
+}
+{
+name = "fast-inserter",
+ingredients = {
+{"electronic-circuit", 2},
+{"iron-plate", 2},
+{"inserter", 1}
+},
+result = "fast-inserter"
+}
+{
+name = "filter-inserter",
+ingredients = {
+{"fast-inserter", 1},
+{"electronic-circuit", 4}
+},
+result = "filter-inserter"
+}
+{
+name = "long-handed-inserter",
+ingredients = {
+{"iron-gear-wheel", 1},
+{"iron-plate", 1},
+{"inserter", 1}
+},
+result = "long-handed-inserter"
+}
+{
+name = "burner-inserter",
+ingredients = {
+{"iron-plate", 1},
+{"iron-gear-wheel", 1}
+},
+result = "burner-inserter"
+}
+{
+name = "pipe",ingredients = {{"iron-plate", 1}},
+result = "pipe"
+{
+name = "offshore-pump",
+ingredients = {
+{"electronic-circuit", 2},
+{"pipe", 1},
+{"iron-gear-wheel", 1}
+},
+result = "offshore-pump"
+}
+{
+name = "copper-cable",
+ingredients = {{"copper-plate", 1}},
+result = "copper-cable",
+result_count = 2
+}
+{
+name = "small-electric-pole",
+ingredients = {
+{"wood", 1},
+{"copper-cable", 2}
+},
+result = "small-electric-pole",
+result_count = 2
+}
+{
+name = "pistol",
+energy_required = 5,
+ingredients = {
+{"copper-plate", 5},
+{"iron-plate", 5}
+},
+result = "pistol"
+}
+{
+name = "submachine-gun",energy_required = 10,
+ingredients = {
+{"iron-gear-wheel", 10},
+{"copper-plate", 5},
+{"iron-plate", 10}
+},
+result = "submachine-gun"
+{
+name = "firearm-magazine",
+energy_required = 1,
+ingredients = {{"iron-plate", 4}},
+result = "firearm-magazine",
+result_count = 1
+}
+{
+name = "light-armor",
+energy_required = 3,
+ingredients = {{"iron-plate", 40}},
+result = "light-armor"
+}
+{
+name = "radar",
+ingredients = {
+{"electronic-circuit", 5},
+{"iron-gear-wheel", 5},
+{"iron-plate", 10}
+},
+result = "radar"
+}
+{
+name = "small-lamp",
+ingredients = {
+{"electronic-circuit", 1},
+{"copper-cable", 3},
+{"iron-plate", 1}
+},
+result = "small-lamp"
+}
+{
+name = "pipe-to-ground",
+ingredients = {
+{"pipe", 10},
+{"iron-plate", 5}
+},
+result_count = 2,
+result = "pipe-to-ground"
+}
+{
+name = "assembling-machine-1",
+ingredients = {
+{"electronic-circuit", 3},
+{"iron-gear-wheel", 5},
+{"iron-plate", 9}
+},
+result = "assembling-machine-1"
+}
+{
+name = "repair-pack",
+ingredients = {
+{"electronic-circuit", 2},
+{"iron-gear-wheel", 2}
+},
+result = "repair-pack"
+}
+{
+name = "automation-science-pack",
+energy_required = 5,
+ingredients = {
+{"copper-plate", 1},
+{"iron-gear-wheel", 1}
+},
+result = "automation-science-pack"
+}
+{
+name = "logistic-science-pack",
+energy_required = 6,
+ingredients = {
+{"inserter", 1},
+{"transport-belt", 1}
+},
+result = "logistic-science-pack"
+}
+{
+name = "lab",
+energy_required = 2,
+ingredients = {
+{"electronic-circuit", 10},
+{"iron-gear-wheel", 10},
+{"transport-belt", 4}
+},
+result = "lab"
+}
+{
+name = "stone-wall",
+ingredients = {{"stone-brick", 5}},
+result = "stone-wall"
+}
+{
+name = "assembling-machine-2",ingredients = {
+{"steel-plate", 2},
+{"electronic-circuit", 3},
+{"iron-gear-wheel", 5},
+{"assembling-machine-1", 1}
+},
+result = "assembling-machine-2"
+{
+name = "splitter",
+energy_required = 1,
+ingredients = {
+{"electronic-circuit", 5},
+{"iron-plate", 5},
+{"transport-belt", 4}
+},
+result = "splitter"
+}
+{
+name = "underground-belt",
+energy_required = 1,
+ingredients = {
+{"iron-plate", 10},
+{"transport-belt", 5}
+},
+result_count = 2,
+result = "underground-belt"
+}
+{
+name = "loader",
+hidden = true,
+energy_required = 1,
+ingredients = {
+{"inserter", 5},
+{"electronic-circuit", 5},
+{"iron-gear-wheel", 5},
+{"iron-plate", 5},
+{"transport-belt", 5}
+},
+result = "loader"
+}
+{
+name = "car",
+energy_required = 2,
+ingredients = {
+{"engine-unit", 8},
+{"iron-plate", 20},
+{"steel-plate", 5}
+},
+result = "car"
+}
+{
+name = "engine-unit",
+energy_required = 10,
+ingredients = {
+{"steel-plate", 1},
+{"iron-gear-wheel", 1},
+{"pipe", 2}
+},
+result = "engine-unit",
+}
+{
+name = "iron-chest",
+ingredients = {{"iron-plate", 8}},
+result = "iron-chest"
+}
+{
+name = "big-electric-pole",
+ingredients = {
+{"iron-stick", 8},
+{"steel-plate", 5},
+{"copper-plate", 5}
+},
+result = "big-electric-pole"
+}
+{
+name = "medium-electric-pole",
+ingredients = {
+{"iron-stick", 4},
+{"steel-plate", 2},
+{"copper-plate", 2}
+},
+result = "medium-electric-pole"
+}
+{
+name = "shotgun",
+energy_required = 10,
+ingredients = {
+{"iron-plate", 15},
+{"iron-gear-wheel", 5},
+{"copper-plate", 10},
+{"wood", 5}
+},
+result = "shotgun"
+}
+{
+name = "shotgun-shell",
+energy_required = 3,
+ingredients = {
+{"copper-plate", 2},
+{"iron-plate", 2}
+},
+result = "shotgun-shell"
+}
+{
+name = "piercing-rounds-magazine",
+energy_required = 3,
+ingredients = {
+{"firearm-magazine", 1},
+{"steel-plate", 1},
+{"copper-plate", 5}
+},
+result = "piercing-rounds-magazine"
+}
+{
+name = "grenade",
+energy_required = 8,
+ingredients = {
+{"iron-plate", 5},
+{"coal", 10}
+},
+result = "grenade"
+}
+{
+name = "steel-furnace",
+ingredients = {{"steel-plate", 6},
+{"stone-brick", 10}},
+result = "steel-furnace",
+energy_required = 3,
+}
+{
+name = "gate",
+ingredients = {{"stone-wall", 1},
+{"steel-plate", 2},
+{"electronic-circuit", 2}},
+result = "gate"
+}
+{
+name = "heavy-armor",
+energy_required = 8,
+ingredients = {{ "copper-plate", 100},
+{"steel-plate", 50}},
+result = "heavy-armor"
+}
+{
+name = "steel-chest",
+ingredients = {{"steel-plate", 8}},
+result = "steel-chest"
+}
+{
+name = "fast-underground-belt",
+energy_required = 2,
+ingredients = {
+{"iron-gear-wheel", 40},
+{"underground-belt", 2}
+},
+result_count = 2,
+result = "fast-underground-belt"
+}
+{
+name = "fast-splitter",
+energy_required = 2,
+ingredients = {
+{"splitter", 1},
+{"iron-gear-wheel", 10},
+{"electronic-circuit", 10}
+},
+result = "fast-splitter"
+}
+{
+name = "concrete",
+energy_required = 10,
+ingredients = {
+{"stone-brick", 5},
+{"iron-ore", 1},
+{type="fluid", name="water", amount=100}
+},
+result= "concrete",
+result_count = 10
+}
+{
+name = "hazard-concrete",
+energy_required = 0.25,
+ingredients = {
+{"concrete", 10}
+},
+result= "hazard-concrete",
+result_count = 10
+}
+{
+name = "refined-concrete",
+energy_required = 15,
+ingredients = {
+{"concrete", 20},
+{"iron-stick", 8},
+{"steel-plate", 1},
+{type="fluid", name="water", amount=100}
+},
+result= "refined-concrete",
+result_count = 10
+}
+{
+name = "refined-hazard-concrete",
+energy_required = 0.25,
+ingredients = {
+{"refined-concrete", 10}
+},
+result= "refined-hazard-concrete",
+result_count = 10
+}
+{
+name = "landfill",
+energy_required = 0.5,
+ingredients = {
+{"stone", 20}
+},
+result= "landfill",
+result_count = 1
+}
+{
+name = "fast-transport-belt",
+ingredients = {
+{"iron-gear-wheel", 5},
+{"transport-belt", 1}
+},
+result = "fast-transport-belt"
+}
+{
+name = "solar-panel",
+energy_required = 10,
+ingredients = {
+{"steel-plate", 5},
+{"electronic-circuit", 15},
+{"copper-plate", 5}
+},
+result = "solar-panel"
+}
+{
+name = "rail",
+ingredients = {
+{"stone", 1},
+{"iron-stick", 1},
+{"steel-plate", 1}
+},
+result = "rail",
+result_count = 2
+}
+{
+name = "locomotive",
+energy_required = 4,
+ingredients = {
+{"engine-unit", 20},
+{"electronic-circuit", 10},
+{"steel-plate", 30}
+},
+result = "locomotive"
+}
+{
+name = "cargo-wagon",
+energy_required = 1,
+ingredients = {
+{"iron-gear-wheel", 10},
+{"iron-plate", 20},
+{"steel-plate", 20}
+},
+result = "cargo-wagon"
+}
+{
+name = "rail-signal",
+ingredients = {
+{"electronic-circuit", 1},
+{"iron-plate", 5}
+},
+result = "rail-signal"
+}
+{
+name = "rail-chain-signal",
+ingredients = {
+{"electronic-circuit", 1},
+{"iron-plate", 5}
+},
+result = "rail-chain-signal"
+}
+{
+name = "train-stop",
+ingredients = {
+{"electronic-circuit", 5},
+{"iron-plate", 6},
+{"iron-stick", 6},
+{"steel-plate", 3}
+},
+result = "train-stop"
+}
+{
+name = "copper-plate",
+energy_required = 3.2,
+ingredients = {{ "copper-ore", 1}},
+result = "copper-plate"
+}
+{
+name = "iron-plate",
+energy_required = 3.2,
+ingredients = {{"iron-ore", 1}},
+result = "iron-plate"
+}
+{
+name = "stone-brick",
+energy_required = 3.2,
+ingredients = {{"stone", 2}},
+result = "stone-brick"
+}
+{
+name = "steel-plate",energy_required = 16,
+ingredients = {{"iron-plate", 5}},
+result = "steel-plate"
+{
+name = "arithmetic-combinator",
+ingredients = {
+{"copper-cable", 5},
+{"electronic-circuit", 5}
+},
+result = "arithmetic-combinator"
+}
+{
+name = "decider-combinator",
+ingredients = {
+{"copper-cable", 5},
+{"electronic-circuit", 5}
+},
+result = "decider-combinator"
+}
+{
+name = "constant-combinator",
+ingredients = {
+{"copper-cable", 5},
+{"electronic-circuit", 2}
+},
+result = "constant-combinator"
+}
+{
+name = "power-switch",
+energy_required = 2,
+ingredients = {
+{"iron-plate", 5},
+{"copper-cable", 5},
+{"electronic-circuit", 2}
+},
+result = "power-switch"
+}
+{
+name = "programmable-speaker",
+energy_required = 2,
+ingredients = {
+{"iron-plate", 3},
+{"iron-stick", 4},
+{"copper-cable", 5},
+{"electronic-circuit", 4}
+},
+result = "programmable-speaker"
+}
+{
+name = "red-wire",
+ingredients = {
+{"electronic-circuit", 1},
+{"copper-cable", 1}
+},
+result = "red-wire"
+}
+{
+name = "green-wire",
+ingredients = {
+{"electronic-circuit", 1},
+{"copper-cable", 1}
+},
+result = "green-wire"
+}
+{
+name = "poison-capsule",
+energy_required = 8,
+ingredients = {
+{"steel-plate", 3},
+{"electronic-circuit", 3},
+{"coal", 10}
+},
+result = "poison-capsule"
+}
+{
+name = "slowdown-capsule",
+energy_required = 8,
+ingredients = {
+{"steel-plate", 2},
+{"electronic-circuit", 2},
+{"coal", 5}
+},
+result = "slowdown-capsule"
+}
+{
+name = "cluster-grenade",
+energy_required = 8,
+ingredients = {
+{"grenade", 7},
+{"explosives", 5},
+{"steel-plate", 5}
+},
+result = "cluster-grenade"
+}
+{
+name = "defender-capsule",
+energy_required = 8,
+ingredients = {
+{"piercing-rounds-magazine", 3},
+{"electronic-circuit", 3},
+{"iron-gear-wheel", 3}
+},
+result = "defender-capsule"
+}
+{
+name = "distractor-capsule",
+energy_required = 15,
+ingredients = {
+{"defender-capsule", 4},
+{"advanced-circuit", 3}
+},
+result = "distractor-capsule"
+}
+{
+name = "destroyer-capsule",
+energy_required = 15,
+ingredients = {
+{"distractor-capsule", 4},
+{"speed-module", 1}
+},
+result = "destroyer-capsule"
+}
+{
+name = "cliff-explosives",
+energy_required = 8,
+ingredients = {
+{"explosives", 10},
+{"grenade", 1},
+{"empty-barrel", 1}
+},
+result = "cliff-explosives"
+}
+{
+name = "uranium-rounds-magazine",
+energy_required = 10,
+ingredients = {
+{"piercing-rounds-magazine", 1},
+{"uranium-238", 1}
+},
+result = "uranium-rounds-magazine"
+}
+{
+name = "rocket",
+energy_required = 8,
+ingredients = {
+{"electronic-circuit", 1},
+{"explosives", 1},
+{"iron-plate", 2}
+},
+result = "rocket"
+}
+{
+name = "explosive-rocket",
+energy_required = 8,
+ingredients = {
+{"rocket", 1},
+{"explosives", 2}
+},
+result = "explosive-rocket"
+}
+{
+name = "atomic-bomb",
+energy_required = 50,
+ingredients = {
+{"rocket-control-unit", 10},
+{"explosives", 10},
+{"uranium-235", 30}
+},
+result = "atomic-bomb"
+}
+{
+name = "piercing-shotgun-shell",
+energy_required = 8,
+ingredients = {
+{"shotgun-shell", 2},
+{"copper-plate", 5},
+{"steel-plate", 2}
+},
+result = "piercing-shotgun-shell"
+}
+{
+name = "cannon-shell",energy_required = 8,
+ingredients = {
+{"steel-plate", 2},
+{"plastic-bar", 2},
+{"explosives", 1}
+},
+result = "cannon-shell"
+{
+name = "explosive-cannon-shell",energy_required = 8,
+ingredients = {
+{"steel-plate", 2},
+{"plastic-bar", 2},
+{"explosives", 2}
+},
+result = "explosive-cannon-shell"
+{
+name = "uranium-cannon-shell",
+energy_required = 12,
+ingredients = {
+{"cannon-shell", 1},
+{"uranium-238", 1}
+},
+result = "uranium-cannon-shell"
+}
+{
+name = "explosive-uranium-cannon-shell",
+energy_required = 12,
+ingredients = {
+{"explosive-cannon-shell", 1},
+{"uranium-238", 1}
+},
+result = "explosive-uranium-cannon-shell"
+}
+{
+name = "artillery-shell",
+energy_required = 15,
+ingredients = {
+{"explosive-cannon-shell", 4},
+{"radar", 1},
+{"explosives", 8}
+},
+result = "artillery-shell"
+}
+{
+name = "flamethrower-ammo",
+energy_required = 6,
+ingredients = {
+{type="item", name="steel-plate", amount=5},
+{type="fluid", name="crude-oil", amount=100}
+},
+result = "flamethrower-ammo",
+{
+name = "express-transport-belt",
+ingredients = {
+{"iron-gear-wheel", 10},
+{"fast-transport-belt", 1},
+{type="fluid", name="lubricant", amount=20}
+},
+result = "express-transport-belt"
+{
+name = "assembling-machine-3",
+ingredients = {
+{"speed-module", 4},
+{"assembling-machine-2", 2}
+},
+result = "assembling-machine-3"
+}
+{
+name = "tank",energy_required = 5,
+ingredients = {
+{"engine-unit", 32},
+{"steel-plate", 50},
+{"iron-gear-wheel", 15},
+{"advanced-circuit", 10}
+},
+result = "tank"
+{
+name = "spidertron",
+energy_required = 10,
+ingredients = {
+{"exoskeleton-equipment", 4},
+{"fusion-reactor-equipment", 2},
+{"rocket-launcher", 4},
+{"rocket-control-unit", 16},
+{"low-density-structure", 150},
+{"radar", 2},
+{"effectivity-module-3", 2},
+{"raw-fish", 1}
+},
+result = "spidertron"
+}
+{
+name = "spidertron-remote",
+ingredients = {
+{"rocket-control-unit", 1},
+{"radar", 1}
+},
+result = "spidertron-remote"
+}
+{
+name = "fluid-wagon",
+energy_required = 1.5,
+ingredients = {
+{"iron-gear-wheel", 10},
+{"steel-plate", 16},
+{"pipe", 8},
+{"storage-tank", 1}
+},
+result = "fluid-wagon"
+}
+{
+name = "artillery-wagon",
+energy_required = 4,
+ingredients = {
+{"engine-unit", 64},
+{"iron-gear-wheel", 10},
+{"steel-plate", 40},
+{"pipe", 16},
+{"advanced-circuit", 20}
+},
+result = "artillery-wagon"
+}
+{
+name = "modular-armor",
+energy_required = 15,
+ingredients = {
+{"advanced-circuit", 30},
+{"steel-plate", 50}
+},
+result = "modular-armor"
+}
+{
+name = "power-armor",
+energy_required = 20,
+ingredients = {{ "processing-unit", 40},
+{"electric-engine-unit", 20},
+{"steel-plate", 40}},
+result = "power-armor",
+}
+{
+name = "power-armor-mk2",
+energy_required = 25,
+ingredients = {{ "effectivity-module-2", 25},
+{"speed-module-2", 25},
+{"processing-unit", 60},
+{"electric-engine-unit", 40},
+{"low-density-structure", 30}},
+result = "power-armor-mk2",
+}
+{
+name = "flamethrower",
+energy_required = 10,
+ingredients = {
+{"steel-plate", 5},
+{"iron-gear-wheel", 10}
+},
+result = "flamethrower"
+}
+{
+name = "land-mine",
+energy_required = 5,
+ingredients = {
+{"steel-plate", 1},
+{"explosives", 2}
+},
+result = "land-mine",
+result_count = 4
+}
+{
+name = "rocket-launcher",
+energy_required = 10,
+ingredients = {
+{"iron-plate", 5},
+{"iron-gear-wheel", 5},
+{"electronic-circuit", 5}
+},
+result = "rocket-launcher"
+}
+{
+name = "combat-shotgun",
+energy_required = 10,
+ingredients = {
+{"steel-plate", 15},
+{"iron-gear-wheel", 5},
+{"copper-plate", 10},
+{"wood", 10}
+},
+result = "combat-shotgun"
+}
+{
+name = "chemical-science-pack",
+energy_required = 24,
+ingredients = {
+{"engine-unit", 2},
+{"advanced-circuit", 3},
+{"sulfur", 1}
+},
+result_count = 2,
+result = "chemical-science-pack"
+}
+{
+name = "military-science-pack",
+energy_required = 10,
+ingredients = {
+{"piercing-rounds-magazine", 1},
+{"grenade", 1},
+{"stone-wall", 2}
+},
+result_count = 2,
+result = "military-science-pack"
+}
+{
+name = "production-science-pack",
+energy_required = 21,
+ingredients = {
+{"electric-furnace", 1},
+{"productivity-module", 1},
+{"rail", 30}
+},
+result_count = 3,
+result = "production-science-pack"
+}
+{
+name = "utility-science-pack",
+energy_required = 21,
+ingredients = {
+{"low-density-structure", 3},
+{"processing-unit", 2},
+{"flying-robot-frame", 1}
+},
+result_count = 3,
+result = "utility-science-pack"
+}
+{
+name = "express-underground-belt",
+energy_required = 2,
+ingredients = {
+{"iron-gear-wheel", 80},
+{"fast-underground-belt", 2},
+{type="fluid", name="lubricant", amount=40}
+},
+result_count = 2,
+result = "express-underground-belt"
+}
+{
+name = "fast-loader",
+hidden = true,
+energy_required = 3,
+ingredients = {
+{"fast-transport-belt", 5},
+{"loader", 1}
+},
+result = "fast-loader"
+}
+{
+name = "express-loader",
+hidden = true,
+energy_required = 10,
+ingredients = {
+{"express-transport-belt", 5},
+{"fast-loader", 1}
+},
+result = "express-loader"
+}
+{
+name = "express-splitter",
+energy_required = 2,
+ingredients = {
+{"fast-splitter", 1},
+{"iron-gear-wheel", 10},
+{"advanced-circuit", 10},
+{type="fluid", name="lubricant", amount=80}
+},
+result = "express-splitter"
+}
+{
+name = "advanced-circuit",energy_required = 6,
+ingredients = {
+{"electronic-circuit", 2},
+{"plastic-bar", 2},
+{"copper-cable", 4}
+},
+result = "advanced-circuit"
+{
+name = "processing-unit",energy_required = 10,
+ingredients = {
+{"electronic-circuit", 20},
+{"advanced-circuit", 2},
+{type = "fluid", name = "sulfuric-acid", amount = 5}
+},
+result = "processing-unit"
+{
+name = "logistic-robot",
+ingredients = {
+{"flying-robot-frame", 1},
+{"advanced-circuit", 2}
+},
+result = "logistic-robot"
+}
+{
+name = "construction-robot",
+ingredients = {
+{"flying-robot-frame", 1},
+{"electronic-circuit", 2}
+},
+result = "construction-robot"
+}
+{
+name = "logistic-chest-passive-provider",
+ingredients = {
+{"steel-chest", 1},
+{"electronic-circuit", 3},
+{"advanced-circuit", 1}
+},
+result = "logistic-chest-passive-provider"
+}
+{
+name = "logistic-chest-active-provider",
+ingredients = {
+{"steel-chest", 1},
+{"electronic-circuit", 3},
+{"advanced-circuit", 1}
+},
+result = "logistic-chest-active-provider"
+}
+{
+name = "logistic-chest-storage",
+ingredients = {
+{"steel-chest", 1},
+{"electronic-circuit", 3},
+{"advanced-circuit", 1}
+},
+result = "logistic-chest-storage"
+}
+{
+name = "logistic-chest-buffer",
+ingredients = {
+{"steel-chest", 1},
+{"electronic-circuit", 3},
+{"advanced-circuit", 1}
+},
+result = "logistic-chest-buffer"
+}
+{
+name = "logistic-chest-requester",
+ingredients = {
+{"steel-chest", 1},
+{"electronic-circuit", 3},
+{"advanced-circuit", 1}
+},
+result = "logistic-chest-requester"
+}
+{
+name = "rocket-silo",
+ingredients = {
+{"steel-plate", 1000},
+{"concrete", 1000},
+{"pipe", 100},
+{"processing-unit", 200},
+{"electric-engine-unit", 200}
+},
+energy_required = 30,
+result = "rocket-silo",
+}
+{
+name = "roboport",
+energy_required = 5,
+ingredients = {
+{"steel-plate", 45},
+{"iron-gear-wheel", 45},
+{"advanced-circuit", 45}
+},
+result = "roboport"
+}
+{
+name = "substation",
+ingredients = {
+{"steel-plate", 10},
+{"advanced-circuit", 5},
+{"copper-plate", 5}
+},
+result = "substation"
+}
+{
+name = "accumulator",
+energy_required = 10,
+ingredients = {
+{"iron-plate", 2},
+{"battery", 5}
+},
+result = "accumulator"
+}
+{
+name = "electric-furnace",
+ingredients = {{"steel-plate", 10},
+{"advanced-circuit", 5},
+{"stone-brick", 10}},
+result = "electric-furnace",
+energy_required = 5,
+}
+{
+name = "beacon",
+energy_required = 15,
+ingredients = {
+{"electronic-circuit", 20},
+{"advanced-circuit", 20},
+{"steel-plate", 10},
+{"copper-cable", 10}
+},
+result = "beacon"
+}
+{
+name = "pumpjack",
+energy_required = 5,
+ingredients = {
+{"steel-plate", 5},
+{"iron-gear-wheel", 10},
+{"electronic-circuit", 5},
+{"pipe", 10}
+},
+result = "pumpjack",
+}
+{
+name = "oil-refinery",
+energy_required = 8,
+ingredients = {
+{"steel-plate", 15},
+{"iron-gear-wheel", 10},
+{"stone-brick", 10},
+{"electronic-circuit", 10},
+{"pipe", 10}
+},
+result = "oil-refinery",
+}
+{
+name = "electric-engine-unit",
+energy_required = 10,
+ingredients = {
+{"engine-unit", 1},
+{type="fluid", name= "lubricant", amount = 15},
+{"electronic-circuit", 2}
+},
+result = "electric-engine-unit",
+}
+{
+name = "flying-robot-frame",
+energy_required = 20,
+ingredients = {
+{"electric-engine-unit", 1},
+{"battery", 2},
+{"steel-plate", 1},
+{"electronic-circuit", 3}
+},
+result = "flying-robot-frame",
+}
+{
+name = "explosives",
+{
+name = "battery",energy_required = 4,
+ingredients = {
+{type="fluid", name="sulfuric-acid", amount=20},
+{"iron-plate", 1},
+{"copper-plate", 1}
+},
+result = "battery"
+{
+name = "storage-tank",
+energy_required = 3,
+ingredients = {
+{"iron-plate", 20},
+{"steel-plate", 5}
+},
+result= "storage-tank"
+}
+{
+name = "pump",
+energy_required = 2,
+ingredients = {
+{"engine-unit", 1},
+{"steel-plate", 1},
+{"pipe", 1}
+},
+result= "pump"
+}
+{
+name = "chemical-plant",
+energy_required = 5,
+ingredients = {
+{"steel-plate", 5},
+{"iron-gear-wheel", 5},
+{"electronic-circuit", 5},
+{"pipe", 5}
+},
+result= "chemical-plant"
+}
+{
+name = "low-density-structure",energy_required = 20,
+ingredients = {
+{"steel-plate", 2},
+{"copper-plate", 20},
+{"plastic-bar", 5}
+},
+result= "low-density-structure"
+{
+name = "rocket-fuel",
+energy_required = 30,
+ingredients = {
+{"solid-fuel", 10},
+{type="fluid", name="light-oil", amount=10}
+},
+result= "rocket-fuel"
+}
+{
+name = "rocket-control-unit",
+energy_required = 30,
+ingredients = {
+{"processing-unit", 1},
+{"speed-module", 1}
+},
+result= "rocket-control-unit"
+}
+{
+name = "rocket-part",
+energy_required = 3,
+hidden = true,
+ingredients = {
+{"rocket-control-unit", 10},
+{"low-density-structure", 10},
+{"rocket-fuel", 10}
+},
+result= "rocket-part"
+}
+{
+name = "satellite",
+energy_required = 5,
+ingredients = {
+{"low-density-structure", 100},
+{"solar-panel", 100},
+{"accumulator", 100},
+{"radar", 5},
+{"processing-unit", 100},
+{"rocket-fuel", 50}
+},
+result= "satellite",
+}
+{
+name = "electric-energy-interface",
+energy_required = 0.5,
+ingredients = {
+{"iron-plate", 2},
+{"electronic-circuit", 5}
+},
+result = "electric-energy-interface"
+}
+{
+name = "nuclear-reactor",
+energy_required = 8,
+ingredients = {
+{"concrete", 500},
+{"steel-plate", 500},
+{"advanced-circuit", 500},
+{"copper-plate", 500}
+},
+result = "nuclear-reactor",
+}
+{
+name = "centrifuge",
+energy_required = 4,
+ingredients = {
+{"concrete", 100},
+{"steel-plate", 50},
+{"advanced-circuit", 100},
+{"iron-gear-wheel", 100}
+},
+result = "centrifuge",
+}
+{
+name = "uranium-processing",
+energy_required = 12,
+ingredients = {{"uranium-ore", 10}},
+icon_size = 64, results = {
+{
+name = "uranium-235",
+probability = 0.007,
+amount = 1
+},
+{
+name = "uranium-238",
+probability = 0.993,
+amount = 1
+}
+}
+}
+{
+name = "kovarex-enrichment-process",
+energy_required = 60,
+ingredients = {{"uranium-235", 40},
+{"uranium-238", 5}},
+icon_size = 64, results = {{"uranium-235", 41},
+{"uranium-238", 2}},
+}
+{
+name = "nuclear-fuel",
+energy_required = 90,
+ingredients = {{"uranium-235", 1},
+{"rocket-fuel", 1}},
+icon_size = 64, result = "nuclear-fuel"
+}
+{
+name = "nuclear-fuel-reprocessing",
+energy_required = 60,
+ingredients = {{"used-up-uranium-fuel-cell", 5}},
+icon_size = 64, results = {{"uranium-238", 3}},
+}
+{
+name = "uranium-fuel-cell",
+energy_required = 10,
+ingredients = {
+{"iron-plate", 10},
+{"uranium-235", 1},
+{"uranium-238", 19}
+},
+result = "uranium-fuel-cell",
+result_count = 10
+}
+{
+name = "heat-exchanger",
+energy_required = 3,
+ingredients = {{"steel-plate", 10},
+{"copper-plate", 100},
+{"pipe", 10}},
+result = "heat-exchanger"
+}
+{
+name = "heat-pipe",
+energy_required = 1,
+ingredients = {{"steel-plate", 10},
+{"copper-plate", 20}},
+result = "heat-pipe"
+}
+{
+name = "steam-turbine",
+energy_required = 3,
+ingredients = {{"iron-gear-wheel", 50},
+{"copper-plate", 50},
+{"pipe", 20}},
+result = "steam-turbine"
+}
