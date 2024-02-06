@@ -1,5 +1,9 @@
 /*
 
+    ABANDON HOPE, ALL YE WHO ENTER
+
+
+
     Written by Malcolm LaRose for C++/17 in February, the year of our Lord, 2024, the 6th day.
     Free to use and edit, but please attribute me if you publish anything based on this
 
@@ -26,6 +30,27 @@ TODO:
 #include <vector>
 #include <regex>
 #include <cctype>  // Include the header for std::isspace
+
+
+// FUNCTION PROTOTYPES
+std::string extractNestedBraces(const std::string& input);
+std::vector<std::string> extractIndividualMembers(const std::string& input);
+std::string getNormal(const std::string& inputMember);
+void removeLeadingWhitespace(std::string& text);
+void removeLineStartingWith(std::string& text, const std::string& sequence);
+std::string removeQuotes(const std::string& input);
+void ensureNewlineAfterBrace(std::string& text);
+void insertNewlineBetweenBrackets(std::string& input);
+void removeNewlineAfterEquals(std::string& text);
+std::string removeCraftingMachineTint(std::string& inputMember);
+void checkForLastComma(std::vector<std::string> inputMember, int i);
+bool checkForLastCommaBool(std::vector<std::string> inputMember, int i);
+std::string parseIngredients(const std::string& ingredientsData);
+std::string getIngredients(std::string& inputMember);
+std::string getResults(std::string& inputMember);
+std::string getRecipeName(std::string& inputMember);
+std::string getEnergy(std::string& inputMember);
+
 
 
 // Works on one member (or category) to extract contents from within nested braces
@@ -487,7 +512,7 @@ int main() {
         individualMembers[i] = newerMember;
 
         // This gets put in roughCut.txt eventually
-        auto outputString = individualMembers[i]; // Compare this to newer versions below for correctness
+        std::string outputString = individualMembers[i]; // Compare this to newer versions below for correctness
 
 
         // This is the ROUGHCUT output for now, everything else is essentially runtime debugging
