@@ -1,19 +1,15 @@
 /*
 
-    Written by Malcolm LaRose for C++/17 in January, the year of our Lord, 2024, the 16th day.
+    Written by Malcolm LaRose for C++/17 in February, the year of our Lord, 2024, the 6th day.
     Free to use and edit, but please attribute me if you publish anything based on this
 
 TODO:
 
-    Finish getIngredients function
-        One line per ingredient and amount
-        Same with the weird ones
-
+    Finish getResults and getEnergy functions
     Move to utilities file to be used by factoriocalc
-    Finish cleaning up recipe list
-        // Clean up braces and newlines
     Figure out how to extract data
     Figure out how to put data into Recipes
+        struct?
 
     Bonus:
     Convert factorio recipe.lua to TextFile1.txt
@@ -308,21 +304,6 @@ bool checkForLastCommaBool(std::vector<std::string> inputMember, int i) {
 }
 
 
-
-//std::string formatToSingleLine(const std::string& input) {
-//    std::istringstream iss(input);
-//    std::ostringstream oss;
-//
-//    std::string line;
-//    while (std::getline(iss, line)) {
-//        // Append the line to the output string, removing leading and trailing whitespaces
-//        oss << line;
-//    }
-//
-//    return oss.str();
-//}
-
-
 // Function to parse ingredients data and output in the format {name, amount}
 std::string parseIngredients(const std::string& ingredientsData) {
     std::vector<std::string> result;
@@ -413,16 +394,17 @@ std::string getIngredients(std::string& inputMember) {
 
 }
 
+std::string getResults(std::string& inputMember) {
 
+    // Check for results and result count
+    // // If result to one thing
+    // // If results do another thing
+    // // If no result count, result count = 1
 
+    return "";
+}
 
 std::string getRecipeName(std::string& inputMember) {
-
-    // Take a member
-    // Find name string
-    // Find the position of "name"
-    // Extract important info
-    // Return important info
 
     std::string result;
     size_t pos = inputMember.find("name = ");
@@ -443,14 +425,6 @@ std::string getRecipeName(std::string& inputMember) {
     return name;
 }
 
-std::string getResults(std::string& inputMember) {
-
-    // Check for results and result count
-    // if no result count, result count = 1
-
-    return "";
-}
-
 std::string getEnergy(std::string& inputMember) {
 
     // Check for energy required
@@ -458,8 +432,6 @@ std::string getEnergy(std::string& inputMember) {
 
     return "";
 }
-
-
 
 
 
@@ -475,14 +447,10 @@ int main() {
         // If there is no result count, assume 1
         // Look for results first, use result if it doesn't exist
     // Categories to trim: type, category, enabled, icon, icon_size, icon_mipmaps, subgroup, order, allow_decomposition, main_product, crafting_machine_tint,
-    // Might be easiest to trim then grab
-
-//    std::cout << "Raw string content:\n" << rawString << std::endl;
 
 
 
     // Functions that act on the whole raw string
-    // 
     // ONE LINE CATEGORIES ONLY!!!
     std::vector<std::string> catsToRemove = { "type", "category", "enabled", "order", "allow_decomposition", "main_product", "subgroup", "requester_paste_multiplier"};
 
@@ -493,7 +461,7 @@ int main() {
     for (auto& vi : catsToRemove) {
         removeLineStartingWith(rawString, vi);
     }
-    removeLineStartingWith(rawString, "icon");
+    removeLineStartingWith(rawString, "icon"); // Not perfect
 
     removeNewlineAfterEquals(rawString);
 
@@ -510,31 +478,22 @@ int main() {
     // Processing individual members
     std::cout << '{' << std::endl; // Opening containing bracket
     for (size_t i = 0; i < individualMembers.size(); ++i) {
-        // std::cout << "Original member:\n" << individualMembers[i] << '\n';  // Debug line
-        
-        // std::cout << "NEW MEMBER: " << std::endl << std::endl;
 
         // Get normal recipe, trim expensive one, trim crafting_machine_tint
         auto newMember = getNormal(individualMembers[i]);
         auto newerMember = removeCraftingMachineTint(newMember);
-        auto newestMember = ""; 
-
-        // std::cout << "Modified member:\n" << newMember << '\n';  // Debug line
 
         // Replace member with updated one with normal recipe and extra removed stuff
         individualMembers[i] = newerMember;
 
-        // auto ingredientsTest = getIngredients(individualMembers[i]);
-
-
         // This gets put in roughCut.txt eventually
-        auto outputString = individualMembers[i]; // Usually individualMembers[i]
+        auto outputString = individualMembers[i]; // Compare this to newer versions below for correctness
 
 
         // This is the ROUGHCUT output for now, everything else is essentially runtime debugging
         if (!checkForLastCommaBool) {
             rawStringStream << outputString << ',' << std::endl;
-        }
+        } 
         else {
             rawStringStream << outputString << std::endl;
         }
@@ -548,14 +507,6 @@ int main() {
         std::string nameOutput = getRecipeName(individualMembers[i]);
 
         std::cout << removeQuotes(nameOutput) << std::endl << removeQuotes(ingredientsOutput) << std::endl << std::endl;
-
-
-        // Below here we want to extract the data from each member
-            // We should probably do this by identifying each category and placing them into a new member
-            // We can delete each category from the member as we collect it
-            // So reconstruct the members with the relevant information while we deplete the originals
-        // Need to treat ingredients first, as it has the weirdest structure and removing it from
-
 
         // LINE BY LINE TEST STATEMENTS
 
