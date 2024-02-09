@@ -399,16 +399,16 @@ std::string getIngredients(std::string& inputMember) {
             outputPair = ingContents;
         }
 
-        else if (typePos != std::string::npos) {
+        else if (typePos != std::string::npos) { // Ingredients are weird (fluid recipe)
             outputPair = parseIngredients(ingContents);
         }
 
-        else {
+        else { // Fallthrough
             outputPair = ingContents;
         }
 
-        ensureNewlineAfterBrace(outputPair);
-        insertNewlineBetweenBrackets(outputPair);
+        ensureNewlineAfterBrace(outputPair); // Cleans up any weird braces
+        insertNewlineBetweenBrackets(outputPair); // And the same
 
         return outputPair;
     }
@@ -419,6 +419,7 @@ std::string getIngredients(std::string& inputMember) {
 
 }
 
+
 std::string getResults(std::string& inputMember) {
 
     // Check for results and result count
@@ -426,7 +427,30 @@ std::string getResults(std::string& inputMember) {
     // // If results do another thing
     // // If no result count, result count = 1
 
-    return "";
+    size_t resultPos = inputMember.find("result");
+    size_t resultsPos = inputMember.find("results");
+
+    std::string rOutput = "";
+
+    if (resultsPos != std::string::npos) {
+        // There are results
+        std::string resultsContents = extractNestedBraces(inputMember.substr(resultsPos));
+        rOutput = resultsContents;
+    }
+
+    else if ((resultPos != std::string::npos) and (resultsPos == std::string::npos)) {
+        // There is a result
+        std::string resultContents = extractNestedBraces(inputMember.substr(resultPos));
+        rOutput = resultContents;
+
+    }
+
+    else {
+        // PANICK
+        std::cout << "PANICKING!" << std::endl;
+    }
+
+    return rOutput;
 }
 
 std::string getRecipeName(std::string& inputMember) {
@@ -434,9 +458,9 @@ std::string getRecipeName(std::string& inputMember) {
     std::string result;
     size_t pos = inputMember.find("name = ");
 
-    // Find the end of the current "name = "
+    // Find the end of the current "name = " 8 chars
     size_t endPos = inputMember.find(',', pos); // First comma after name = 
-    if (endPos == std::string::npos) {
+    if (endPos == std::string::npos) { // Name not found
         result = "PaNiC";
     }
 
@@ -455,7 +479,24 @@ std::string getEnergy(std::string& inputMember) {
     // Check for energy required
     // If no energy required, energy required = 1
 
-    return "";
+    std::string result;
+    size_t pos = inputMember.find("energy_required ="); // 18 chars
+
+    size_t endPos = inputMember.find(',', pos);
+
+    if (endPos == std::string::npos) {
+        result = "1";
+    }
+    else if (endPos != std::string::npos) {
+        result = inputMember.substr(pos + 18, endPos - pos - 19);
+    }
+    else {
+        result = "penic";
+    }
+
+
+
+    return result;
 }
 
 
@@ -528,10 +569,13 @@ int main() {
         // Now we are assembling our own members from the initial data
         // We may compare afterwards to ensure correctness
 
+        std::string energyOutput = getEnergy(individualMembers[i]);
         std::string ingredientsOutput = getIngredients(individualMembers[i]);
         std::string nameOutput = getRecipeName(individualMembers[i]);
+        std::string resultsOutput = getResults(individualMembers[i]);
 
-        std::cout << removeQuotes(nameOutput) << std::endl << removeQuotes(ingredientsOutput) << std::endl << std::endl;
+
+        std::cout << removeQuotes(nameOutput) << std::endl << removeQuotes(ingredientsOutput) << std::endl << energyOutput << std::endl << removeQuotes(resultsOutput) << std::endl << std::endl;
 
         // LINE BY LINE TEST STATEMENTS
 
